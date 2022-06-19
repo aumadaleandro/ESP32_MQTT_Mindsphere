@@ -1,0 +1,137 @@
+[
+    {
+        "id": "ea224e31064fe7f6",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "74c9e84978ca7bd9",
+        "type": "mqtt in",
+        "z": "ea224e31064fe7f6",
+        "name": "Lê Temperatura",
+        "topic": "ESP32/temperature",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3650a1053bdfc309",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 260,
+        "wires": [
+            [
+                "94ef1e9a96934587",
+                "68630a525816f4fb"
+            ]
+        ]
+    },
+    {
+        "id": "94ef1e9a96934587",
+        "type": "debug",
+        "z": "ea224e31064fe7f6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 410,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "07498acae0df5fb6",
+        "type": "mindconnect",
+        "z": "ea224e31064fe7f6",
+        "name": "",
+        "configtype": "SHARED_SECRET",
+        "agentconfig": "{  \"content\": {    \"baseUrl\": \"https://southgate.eu1.mindsphere.io\",    \"iat\": \"eyJraWQiOiJrZXktaWQtMSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJTQ0kiLCJzdWIiOiIzNzc4OTU0ZGQ5ZmY0YTZmYmQzMjZiNmMxZDViZjQ1NiIsImF1ZCI6IkFJQU0iLCJpYXQiOjE2NTU1MjE1MDIsIm5iZiI6MTY1NTUyMTUwMiwiZXhwIjoxNjU2MTI2MzAyLCJqdGkiOiJmYTllMjhmNi00OGZmLTQzNzgtOTYyMy1mYjQ3NDc4YWViYWYiLCJzY29wZSI6IklBVCIsInRlbiI6Imlpb3RpbWhmIiwidGVuX2N0eCI6Im1haW4tdGVuYW50IiwiY2xpZW50X2NyZWRlbnRpYWxzX3Byb2ZpbGUiOlsiU0hBUkVEX1NFQ1JFVCJdLCJzY2hlbWFzIjpbInVybjpzaWVtZW5zOm1pbmRzcGhlcmU6djEiXX0.BdxSet97qSDO18LitfykH18_nSW-O1VN-gSjCsdzfYrIOsrW8t40H437DbKVVRgZJYfyOiJ4hrt_zkTKnpYqYqOFoZl58At8UTCWUkh4AMEwCLCI7pvARdoOJibZaXd4gK0dYTXIvQPoaYFyl0TmqvTDq9OT6JDq0XveOtg8RFgAf_baBvgUixUSWbiKr5L0HKSkCy3a8TkiyHs--E0NvEtBUAzCIw2zyvCaZe6jC2uLh5mOp1Kv7VkAzj9FM5BBesF1SbbEI5K3zkQYQOPGnCfwXf4ugcw9D-akc5Rg2HMFRAhuxncf1Im0tRwOOxdZSIm8iTNjSatT9NqpYBxEdA\",    \"clientCredentialProfile\": [      \"SHARED_SECRET\"    ],    \"clientId\": \"3778954dd9ff4a6fbd326b6c1d5bf456\",    \"tenant\": \"iiotimhf\"  },  \"expiration\": \"2022-06-25T03:05:02.000Z\"}",
+        "privatekey": "",
+        "model": "",
+        "validate": true,
+        "validateevent": true,
+        "chunk": false,
+        "disablekeepalive": false,
+        "emitcontrol": false,
+        "datalakeonly": false,
+        "supressverbosity": false,
+        "retry": 3,
+        "parallel": 1,
+        "asyncduration": 10,
+        "x": 930,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68630a525816f4fb",
+        "type": "function",
+        "z": "ea224e31064fe7f6",
+        "name": "Formata dados para Mindsphere",
+        "func": "// take a look at the flow examples at https://playground.mindconnect.rocks\nconst values = [\n  {\n    \"dataPointId\": \"DP-Temperatura\",\n    \"qualityCode\": \"0\",\n    \"value\": `${parseFloat(msg.payload)}`\n  },\n];\nmsg._time = new Date();\nmsg.payload=values;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 220,
+        "wires": [
+            [
+                "07498acae0df5fb6",
+                "bf0123b04fc0ae0f"
+            ]
+        ]
+    },
+    {
+        "id": "bf0123b04fc0ae0f",
+        "type": "debug",
+        "z": "ea224e31064fe7f6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 830,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3650a1053bdfc309",
+        "type": "mqtt-broker",
+        "name": "Mosquitto_Local",
+        "broker": "192.168.1.76",
+        "port": "1884",
+        "clientid": "Node-Red",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
