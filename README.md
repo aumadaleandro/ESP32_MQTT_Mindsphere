@@ -13,4 +13,4 @@ Files and descriptions:
   <li> tempMonCloud.json - Node-red flow, to be used on node-red (called visual flow creator) instance at Siemens MindSphere
   <li> tempMonArch.jpg - Image of the architecture of the entire application
     
-Details of development and demonstration can be found on youtube video (on brazilian Portuguese):
+Details of development and demonstration can be found on 3 youtube videos (on brazilian Portuguese). First video: https://youtu.be/nsQzuuTlnAI
